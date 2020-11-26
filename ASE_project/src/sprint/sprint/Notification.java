@@ -17,7 +17,12 @@ public class Notification implements iNotification {
 			System.out.println(n3.t.geCont());
 			}
 		else {
-			
+			Notification n4=new Notification();
+			n4.t.setSub(n.t.getSub());
+			n4.t.setTO("hassan");
+			n4.t.setItem("Mobile charger");
+			n4.t.setCont(n4);
+			System.out.println(n4.t.geCont());	
 		}
 		
 
