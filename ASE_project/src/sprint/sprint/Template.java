@@ -50,7 +50,7 @@ public class Template implements iTemplate{
 	public String getTo() {
 		return to;
 	}
-	public String geCont() {
+	public String getCont() {
 		return cont;
 	}
 	public String getAvll() {

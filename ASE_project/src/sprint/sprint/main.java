@@ -27,6 +27,8 @@ public class main {
 		not.send(not);
 		p.delete(not);
         p.read();
+        p.update(not);
+        p.read();
 	}
 
 }

@@ -95,7 +95,7 @@ public class Presist implements Ipresist {
 	public void read() {
 
 		for (int i = 0; i < list.size(); i++)
-			System.out.println("Subject:" + list.get(i).getSub() + "\n" + "content:" + list.get(i).geCont() + "\n" + "Lang:" + list.get(i).getAvll() + "\n" + "channel:" + list.get(i).getAvlc() + "\n");
+			System.out.println("Subject:" + list.get(i).getSub() + "\n" + "content:" + list.get(i).getCont() + "\n" + "Lang:" + list.get(i).getAvll() + "\n" + "channel:" + list.get(i).getAvlc() + "\n");
 
 	}
 
@@ -111,7 +111,7 @@ public class Presist implements Ipresist {
 			System.out.println("Error this subject already exist");
 				
 		else {
-			n.t.setSub(in);	
+			n.t.setSub(in);
 			n.t.setCont(n);
 		}
 		}
