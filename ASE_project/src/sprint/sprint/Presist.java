@@ -82,6 +82,12 @@ public class Presist implements Ipresist {
 		n.t.setCont(n);
 		list.add(n.t);
 		}
+		else {
+			System.out.println("The notification will not appear because of invalid inputs");
+			System.out.println("--------------------------------");
+			System.out.println("Here's the previous templates");
+			System.out.println("--------------------------------");
+		}
 		}
 		return n;
 	}
