@@ -5,16 +5,12 @@ public class Notification implements iNotification {
 
 	public void send(Notification n) {
 	   
-		if(!t.getSub().contains("buy")) {
-		
-			Notification n3=new Notification();
-			n3.t.setSub(n.t.getSub());
-			n3.t.setTO("hassan");
-			n3.t.setCont(n3);
-			
-			
-			
-			System.out.println(n3.t.geCont());
+		if(!t.getSub().contains("email")) {
+			Email e = new Email();		
+			e.setSub(n.t.getSub());
+			e.setTO("Hassan");
+			e.setCont(n);
+			System.out.println(e.geCont());
 			}
 		else {
 			Notification n4=new Notification();

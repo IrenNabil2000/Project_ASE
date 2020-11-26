@@ -22,21 +22,21 @@ public class Template implements iTemplate{
 		to=t;
 	}
 	public void setCont(Notification n) {
-	if(n.t.getSub().contains("email")) {
-			
-		cont="dear, "+to+" your email is confirmed";
-			
-		}
-	if(n.t.getSub().contains("forget pass")) {
-			
-		cont="dear, "+to+" you can rest your password";
-			
-		}
-	if(n.t.getSub().contains("buy")) {
-		 
-		cont="Dear "+to+" , your booking of the"+ item+"  is confirmed. thanks for using our store :) ";
-			
-		}
+		if(n.t.getSub().contains("email")) {
+			Email e = new Email();
+			e.setCont(n);
+			cont=e.geCont();
+			}
+		else if(n.t.getSub().contains("forget")) {
+			Forget f = new Forget();
+			f.setCont(n);
+			cont=f.geCont();	
+			}
+		else if(n.t.getSub().contains("buy")) {
+			Buy b = new Buy();
+			b.setCont(n);
+			cont=b.geCont();	
+			}
 	}
 	public void setAvll(String l) {
 	  avll=l;
