@@ -3,6 +3,7 @@ package sprint;
 public class Notification implements iNotification {
 	Template t=new Template();
 
+<<<<<<< HEAD
 	public void send(Notification n ){
 		if(!t.getSub().contains("buy")) {
 		
@@ -14,6 +15,16 @@ public class Notification implements iNotification {
 			
 			
 			System.out.println(n3.t.getCont());
+=======
+	public void send(Notification n) {
+	   
+		if(!t.getSub().contains("email")) {
+			Email e = new Email();		
+			e.setSub(n.t.getSub());
+			e.setTO("Hassan");
+			e.setCont(n);
+			System.out.println(e.geCont());
+>>>>>>> cb86a0eda083886aff1cb302bc5fe70f97adbcb9
 			}
 		else {
 			Notification n4=new Notification();
