@@ -25,17 +25,17 @@ public class Template implements iTemplate{
 		if(n.t.getSub().contains("email")) {
 			Email e = new Email();
 			e.setCont(n);
-			cont=e.geCont();
+			cont=e.getCont();
 			}
 		else if(n.t.getSub().contains("forget")) {
 			Forget f = new Forget();
 			f.setCont(n);
-			cont=f.geCont();	
+			cont=f.getCont();	
 			}
 		else if(n.t.getSub().contains("buy")) {
 			Buy b = new Buy();
 			b.setCont(n);
-			cont=b.geCont();	
+			cont=b.getCont();	
 			}
 	}
 	public void setAvll(String l) {

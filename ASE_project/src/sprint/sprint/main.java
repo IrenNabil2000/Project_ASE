@@ -23,11 +23,12 @@ public class main {
 			chan=s.nextLine();
 		}*/
 	
-		not=p.create("email confirmation", "english", "email");
+		not=p.create("buy confirmation", "english", "email");
 		not.send(not);
-		p.delete(not);
         p.read();
-        p.update(not);
+		p.update(not);
+		p.read();
+        p.delete(not);
         p.read();
 	}
 
