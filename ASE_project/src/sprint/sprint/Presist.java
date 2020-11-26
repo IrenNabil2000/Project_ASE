@@ -21,11 +21,31 @@ public class Presist implements Ipresist {
 		list.add(n2.t);
 	}
 
+	public boolean languageValidations(String languageInput) {
+		if(languageInput.equalsIgnoreCase("English") || languageInput.equalsIgnoreCase("French")) {
+			return true;
+		}
+		else
+			return false;
+	}
+	public boolean channelValidations(String channelInput) {
+		if(channelInput.equalsIgnoreCase("Email") || channelInput.equalsIgnoreCase("SMS")) {
+			return true;
+		}
+		else
+			return false;
+	}
 	public Notification create(String subj, String lanaguge, String channel) {
 		Notification n = new Notification();
 		n.t.setSub(subj);
-		n.t.setAvll(lanaguge);
-		n.t.setAvlc(channel);
+		if(languageValidations(lanaguge))
+			n.t.setAvll(lanaguge);
+		else
+			System.out.println("Please choose English or French only");
+		if(channelValidations(channel))
+			n.t.setAvlc(channel);
+		else
+			System.out.println("Please enter the channel");
 		n.t.setCont(n);
 		list.add(n.t);
 		return n;
@@ -48,11 +68,26 @@ public class Presist implements Ipresist {
 		if (input.equals("subject")) {
 			n.t.setSub(in);
 			n.t.setCont(n);
-		} else if (input.equals("language")) {
-			n.t.setAvll(in);
-		} else if (input.equals("channel")) {
-			n.t.setAvlc(in);
-		} else {
+		}
+		else if (input.equals("language"))
+		{
+			if(languageValidations(in)==true)
+				n.t.setAvll(in);
+			else {
+				System.out.println("Please choose English or French only");	
+				update(n);
+			}
+		}
+		else if (input.equals("channel"))
+		{
+			if(channelValidations(in)==true)
+				n.t.setAvlc(in);
+			else {
+				System.out.println("Please choose Email or SMS only");
+				update(n);
+			}
+		}
+		else {
 			System.out.println("invalid input");
 		}
 
