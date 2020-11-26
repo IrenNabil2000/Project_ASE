@@ -7,6 +7,14 @@ public class Template implements iTemplate{
 	String avlc="";
 	String to="x";
 	String item="y";
+	public void setItem(String item)
+	{
+	this.item=item;
+	}
+	public String getItem()
+	{
+	return item;
+	}
 	public void setSub(String s) {
 		sub=s;
 	}
