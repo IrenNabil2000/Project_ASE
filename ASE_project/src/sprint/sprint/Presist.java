@@ -57,4 +57,9 @@ public class Presist implements Ipresist {
 		}
 
 	}
+    public void delete(Notification n)
+{ 	
+	list.remove(n.t);
+	
+}
 }

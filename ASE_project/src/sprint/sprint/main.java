@@ -9,6 +9,8 @@ public class main {
 	
 		not=p.create("email confirmation", "english", "email");
 		not.send(not);
+		p.delete(not);
+        p.read();
 	}
 
 }
