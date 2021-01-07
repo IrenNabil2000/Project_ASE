@@ -1,0 +1,117 @@
+package com.example.Notification.repository;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import com.example.Notification.model.NotificationTemplate;
+
+public class SendConnection {
+	public Connection con;
+	Statement Stmt;
+	ResultSet RS;
+	boolean f;
+	private Queue<NotificationTemplate> smsQueue = new LinkedList<>();
+	private Queue<NotificationTemplate> mailQueue = new LinkedList<>();
+
+	public void setConnection() throws SQLException {
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String url = "jdbc:sqlserver://localhost:1433;databaseName=Sprint3;user=root;password=1234";
+		con = DriverManager.getConnection(url);
+	}
+
+	public boolean Ready(NotificationTemplate template)
+	{
+		try{
+
+			setConnection();
+			Stmt = con.createStatement();
+		    System.out.println("Connection is successfull");
+		 
+		   String line = "INSERT INTO Ready(Content,Subject,Language,Channel,too,item,type,ID) VALUES("
+	               + "'" + template.getContent()+ "',"
+	               + "'" + template.getSubject() + "',"
+	                + "'" + template.getLanguage().toString()+ "',"
+	                + "'" + template.getChannel()+ "',"
+	               + "'" + template.getTo()+ "',"
+	               + "'" + template.getItem()+ "',"
+	               + "'" + template.getType()+ "',"
+	               + template.getId()+")";
+	        Stmt.executeUpdate(line);
+			if(template.getChannel().equalsIgnoreCase("email"))
+			{
+				f=true;
+				
+				mailQueue.add(template);
+				
+			}
+			else
+			{
+				f=true;
+				smsQueue.add(template);
+				
+			}
+		    } catch(SQLException e){
+
+			     System.out.println(e);
+			     f=false;
+
+			    }
+		    return f;
+	}
+	public boolean sent() {
+
+		try {
+
+			setConnection();
+			Stmt = con.createStatement();
+			Iterator<NotificationTemplate> iterator = smsQueue.iterator();
+			Iterator<NotificationTemplate> iterator2 = mailQueue.iterator();
+			boolean flagi1 = iterator.hasNext();
+			boolean flagi2 = iterator2.hasNext();
+			while (flagi1 || flagi2) {
+
+				if (flagi1) {
+					NotificationTemplate t = iterator.next();
+					String line = "INSERT INTO Sent(Content,Subject,Language,Channel,too,item,type,ID) VALUES(" + "'"
+							+ t.getContent() + "'," + "'" + t.getSubject() + "'," + "'" + t.getLanguage().toString()
+							+ "'," + "'" + t.getChannel() + "'," + "'" + t.getTo() + "'," + "'" + t.getItem() + "',"
+							+ "'" + t.getType() + "'," + t.getId() + ")";
+					Stmt.executeUpdate(line);
+					Stmt.executeUpdate("DELETE FROM Ready WHERE ID=" + t.getId() + ";");
+					f = true;
+				}
+
+				// ===================================================================================
+				else {
+					NotificationTemplate t2 = iterator2.next();
+					String line2 = "INSERT INTO Sent(Content,Subject,Language,Channel,too,item,type,ID) VALUES(" + "'"
+							+ t2.getContent() + "'," + "'" + t2.getSubject() + "'," + "'" + t2.getLanguage().toString()
+							+ "'," + "'" + t2.getChannel() + "'," + "'" + t2.getTo() + "'," + "'" + t2.getItem() + "',"
+							+ "'" + t2.getType() + "'," + t2.getId() + ")";
+					Stmt.executeUpdate(line2);
+					Stmt.executeUpdate("DELETE FROM Ready WHERE ID=" + t2.getId() + ";");
+					f = true;
+				}
+				flagi1 = iterator.hasNext();
+				flagi2 = iterator2.hasNext();
+
+			}
+		} catch (SQLException e) {
+
+			System.out.println(e);
+
+		}
+		return f;
+	}
+}
