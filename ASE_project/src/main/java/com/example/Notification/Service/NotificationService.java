@@ -18,13 +18,16 @@ import com.example.Notification.repository.SendNotifacation;
 @Service
 public class NotificationService {
 	private final INotificationTemplateDataAccessLayer inotification;
-	private final SendNotifacation sendnotification;
+	private ISendNotification Emailnotification=new SendEmail();
+	private ISendNotification Smsnotification=new SendSms();
+
 
     @Autowired
     public NotificationService(@Qualifier("notifyRepo") INotificationTemplateDataAccessLayer inotification,
-    @Qualifier("sentRepo") SendNotifacation sendnotification){
+    @Qualifier("EmailRepo") SendEmail Emailnotification, @Qualifier("SMSRepo") SendSms Smsnotification){
         this.inotification=inotification;
-        this.sendnotification=sendnotification;
+        this.Emailnotification=Emailnotification;
+        this.Smsnotification=Smsnotification;
     }
 
     public boolean AddTemplate(NotificationTemplate notification){
@@ -46,14 +49,26 @@ public class NotificationService {
         return inotification.UpdateTemplate(newtemplate);
     }
 
-	public boolean Ready (NotificationTemplate t) {
+	public ArrayList<String> ReadyEmail (int id,String to,String iteam,String email) {
 		
-		 return sendnotification.Ready(t); 
-	}
-    public boolean sent()
-	{
-    	return sendnotification.sent();
-	
-
-}
+        return Emailnotification.Ready(id,to,iteam,email); 
+   }
+   public ArrayList<String> ReadySms (int id,String to,String iteam,String phone) {
+       
+        return Smsnotification.Ready(id,to,iteam,phone); 
+   }
+   public String sendEmail(int id) {
+       boolean f=Emailnotification.send(id);
+       if(f)
+        return "success";
+       else
+           return "failure";
+   }
+   public String sendSms(int id) {
+       boolean f= Smsnotification.send(id);
+       if(f)
+            return "success";
+           else
+               return "failure";
+   }
 }

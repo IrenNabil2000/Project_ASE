@@ -23,7 +23,7 @@ public class NotificationController {
 	    public NotificationController(NotificationService notificationService){
 	        this.notificationService=notificationService;
 	    }
-	   /* @PostMapping()
+	   // @PostMapping()
 	    public boolean AddTemplate( @RequestBody NotificationTemplate notification){
 	    	return notificationService.AddTemplate(notification);
 	    }
@@ -32,10 +32,10 @@ public class NotificationController {
 	        return notificationService.GetAllTemplates();
 	    }
 
-	   @GetMapping(path = "{id}")
+	  // @GetMapping(path = "{id}")
 	    public NotificationTemplate GetTemplate(@PathVariable("id") int id){
 	        return notificationService.GetTemplate(id);
-	    }*/
+	    }
 
 	    @DeleteMapping(path = "{id}")
 	    public boolean DeleteTemplate(@PathVariable("id") int id){
@@ -46,17 +46,28 @@ public class NotificationController {
 	    	return notificationService.UpdateTemplate(template);
 	    }
 	    
-	   @GetMapping
-	    public boolean sent()
+		@PostMapping(path = "{id}/{to}/{item}/{email}")
+		public ArrayList<String> ReadyEmail (@PathVariable("id") int id,@PathVariable("to") String to,@PathVariable("item") String item,@PathVariable("email") String email) {
+
+			return notificationService.ReadyEmail(id, to, item, email);      
+	      }
+	  // @PostMapping(path = "{id}/{to}/{item}/{phone}")
+		public ArrayList<String> ReadySms (@PathVariable("id") int id,@PathVariable("to") String to,@PathVariable("item") String item,@PathVariable("phone") String phone) {
+
+			return notificationService.ReadySms(id, to, item, phone);      
+	      }
+	   @GetMapping(path = "{id}")
+	    public String sentEmail(@PathVariable("id") int id)
 		{
-			return notificationService.sent();
+			return notificationService.sendEmail(id);
 		
 		}
-	    @PostMapping()
-		public boolean Ready (@RequestBody NotificationTemplate t) {
-
-			return notificationService.Ready(t);      
-	      }
+	  // @GetMapping(path = "{id}")
+	    public String sentSms(@PathVariable("id") int id)
+		{
+			return notificationService.sendSms(id);
+		
+		}
 	    
 	    
 
